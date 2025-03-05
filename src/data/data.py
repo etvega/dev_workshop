@@ -5,19 +5,17 @@ class Data:
     """
     
     def invertir_lista(self, lista):
-        """
-        Invierte el orden de los elementos en una lista sin usar reversed() o lista[::-1].
-        
-        Args:
-            lista (list): Lista a invertir
-            
-        Returns:
-            list: Lista con los elementos en orden inverso
-        """
+    
+        lista_invertida = []
+        while lista:
+         lista_invertida.append(lista.pop())  
+        return lista_invertida
         pass
     
-    def buscar_elemento(self, lista, elemento):
-        """
+    class Buscador:
+
+        def buscar_elemento(self, lista, elemento):
+            """
         Busca un elemento en una lista y devuelve su índice (o -1 si no existe).
         Implementación manual sin usar index().
         
@@ -28,6 +26,10 @@ class Data:
         Returns:
             int: Índice del elemento o -1 si no se encuentra
         """
+            for i in range(len(lista)):
+                if lista[i] == elemento:
+                    return i
+            return -1
         pass
     
     def eliminar_duplicados(self, lista):
@@ -41,6 +43,13 @@ class Data:
         Returns:
             list: Lista sin elementos duplicados
         """
+        resultado = []
+        vistos = {}
+        for elemento in lista:
+            if elemento not in vistos:
+                resultado.append(elemento)
+                vistos[elemento] = True
+        return resultado
         pass
     
     def merge_ordenado(self, lista1, lista2):
@@ -54,6 +63,18 @@ class Data:
         Returns:
             list: Lista combinada y ordenada
         """
+        resultado = []
+        i, j = 0, 0
+        while i < len(lista1) and j < len(lista2):
+            if lista1[i] < lista2[j]:
+                resultado.append(lista1[i])
+                i += 1
+            else:
+                resultado.append(lista2[j])
+                j += 1
+        resultado.extend(lista1[i:])
+        resultado.extend(lista2[j:])
+        return resultado
         pass
     
     def rotar_lista(self, lista, k):
@@ -71,14 +92,20 @@ class Data:
     
     def encuentra_numero_faltante(self, lista):
         """
-        Encuentra el número faltante en una lista de enteros del 1 al n.
+        Rota los elementos de una lista k posiciones a la derecha.
         
         Args:
-            lista (list): Lista de enteros del 1 al n con un número faltante
+            lista (list): Lista a rotar
+            k (int): Número de posiciones a rotar
             
         Returns:
-            int: El número que falta en la secuencia
+            list: Lista rotada
         """
+        if not lista:
+            return lista
+        k = k % len(lista)  # puse k porque representa el número de posiciones que la lista debe rotar a la derecha. 
+        return lista[-k:] + lista[:-k]
+
         pass
     
     def es_subconjunto(self, conjunto1, conjunto2):
@@ -92,6 +119,10 @@ class Data:
         Returns:
             bool: True si conjunto1 es subconjunto de conjunto2, False en caso contrario
         """
+        for elemento in conjunto1:
+            if elemento not in conjunto2:
+                return False
+        return True
         pass
     
     def implementar_pila(self):
@@ -101,6 +132,14 @@ class Data:
         Returns:
             dict: Diccionario con métodos push, pop, peek y is_empty
         """
+        pila = []
+        return {
+            "push": lambda x: pila.append(x),
+            "pop": lambda: pila.pop() if pila else None,
+            "peek": lambda: pila[-1] if pila else None,
+            "is_empty": lambda: len(pila) == 0
+        }
+
         pass
     
     def implementar_cola(self):
@@ -110,6 +149,14 @@ class Data:
         Returns:
             dict: Diccionario con métodos enqueue, dequeue, peek y is_empty
         """
+        cola = []
+        return {
+            "enqueue": lambda x: cola.append(x),
+            "dequeue": lambda: cola.pop(0) if cola else None,
+            "peek": lambda: cola[0] if cola else None,
+            "is_empty": lambda: len(cola) == 0
+        }
+
         pass
     
     def matriz_transpuesta(self, matriz):
@@ -122,4 +169,5 @@ class Data:
         Returns:
             list: Matriz transpuesta
         """
+        return [[fila[i] for fila in matriz] for i in range(len(matriz[0]))]
         pass
